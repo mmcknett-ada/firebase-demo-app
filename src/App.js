@@ -24,15 +24,13 @@ function App() {
         {
           error && "Sign in error: " + JSON.stringify(error)
         }
-        {
-          user && (
-            <>
-              <AddThing />
-              <hr />
-              <Things />
-            </>
-          )
-        }
+        <>
+          <AddThing />
+          <hr />
+          <Things />
+          <hr />
+          <button onClick={ () => auth.signOut() }>Sign Out</button>
+        </>
       </header>
     </div>
   );
