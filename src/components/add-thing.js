@@ -1,5 +1,8 @@
 import { useState } from "react";
+import { getFirestore, collection, addDoc } from "firebase/firestore"; 
+
 import "./add-thing.css";
+import app from '../firebase';
 
 export default function AddThing(props) {
   const [name, setName] = useState("");
@@ -10,10 +13,20 @@ export default function AddThing(props) {
     }
   }
 
-  const onSubmit = (evt) => {
+  const onSubmit = async (evt) => {
     evt.preventDefault();
     console.log("Submit clicked!");
     setName("");
+
+    try {
+      const db = getFirestore(app);
+      const docRef = await addDoc(collection(db, "things"), {
+        name: name
+      });
+      console.log("Document written with ID: ", docRef.id);
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
   }
   
   return (
